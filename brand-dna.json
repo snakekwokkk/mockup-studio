@@ -1,0 +1,130 @@
+{
+  "meta": {
+    "brand": "Reference-inspired neutral creator UI",
+    "product": "Mockup Studio",
+    "target": "Responsive browser-based 3D phone mockup tool",
+    "status": "approved",
+    "sources": [
+      {
+        "type": "user_supplied_screenshot",
+        "path": "codex-clipboard-158f6c3f-20a6-4e6c-aafa-5a830dcb3847.png",
+        "scope": "visual system inspiration only"
+      }
+    ]
+  },
+  "character": {
+    "traits": [
+      { "value": "precision-led", "provenance": "observed", "confidence": "high", "evidence": "Dense but orderly editor chrome and aligned controls." },
+      { "value": "neutral", "provenance": "observed", "confidence": "high", "evidence": "Nearly monochrome surfaces with black reserved for primary actions." },
+      { "value": "quietly premium", "provenance": "inferred", "confidence": "medium", "evidence": "Large calm canvas, thin borders, soft pills, and restrained shadows." },
+      { "value": "tool-like", "provenance": "observed", "confidence": "high", "evidence": "Persistent toolbar, inspector panels, and direct manipulation workspace." }
+    ],
+    "summary": "A clean desktop creator interface with a calm light-gray canvas, white utility surfaces, precise hairline dividers, and black capsule actions."
+  },
+  "colors": {
+    "tokens": [
+      { "name": "canvas", "value": "#f3f3f3", "provenance": "observed", "confidence": "medium", "evidence": "Main editor workspace is a very light neutral gray." },
+      { "name": "surface", "value": "#ffffff", "provenance": "observed", "confidence": "high", "evidence": "Header and side panels are white." },
+      { "name": "surface_subtle", "value": "#f7f7f7", "provenance": "observed", "confidence": "medium", "evidence": "Selected rows and secondary pills use near-white gray." },
+      { "name": "text_primary", "value": "#111111", "provenance": "observed", "confidence": "high", "evidence": "Primary labels and icons are near-black." },
+      { "name": "text_muted", "value": "#7a7a7a", "provenance": "observed", "confidence": "medium", "evidence": "Section labels and secondary values use medium gray." },
+      { "name": "border", "value": "#e5e5e5", "provenance": "observed", "confidence": "high", "evidence": "Panels, pills, and rows use light one-pixel separators." },
+      { "name": "action_primary", "value": "#050505", "provenance": "observed", "confidence": "high", "evidence": "Export is the dominant black capsule." }
+    ],
+    "usage_notes": [
+      { "value": "Approximately 72% white, 23% pale gray, 4% black, and 1% accent.", "provenance": "inferred", "confidence": "medium", "evidence": "Estimated from the supplied screenshot." },
+      { "value": "Use black for one primary action at a time; avoid large dark panels.", "provenance": "observed", "confidence": "high", "evidence": "The reference keeps most interface chrome light." }
+    ]
+  },
+  "typography": {
+    "latin": { "family": "neutral neo-grotesk sans", "family_status": "suspected", "fallbacks": ["Inter", "Helvetica Neue", "Arial", "sans-serif"] },
+    "cjk": { "family": "system sans-serif", "family_status": "suspected", "fallbacks": ["PingFang SC", "Microsoft YaHei", "sans-serif"] },
+    "scale": [
+      { "role": "brand", "size": 14, "weight": 650, "line_height": 20, "provenance": "proposed", "confidence": "medium", "evidence": "Adapted for the smaller Mockup Studio shell." },
+      { "role": "section", "size": 13, "weight": 600, "line_height": 18, "provenance": "inferred", "confidence": "medium", "evidence": "Reference uses compact panel headings." },
+      { "role": "control", "size": 13, "weight": 450, "line_height": 18, "provenance": "observed", "confidence": "medium", "evidence": "Controls rely on compact, regular-weight labels." },
+      { "role": "meta", "size": 11, "weight": 450, "line_height": 16, "provenance": "observed", "confidence": "medium", "evidence": "Secondary status text is visibly smaller and gray." }
+    ],
+    "notes": [
+      { "value": "Use restrained weights and sentence case; do not use oversized marketing headlines inside the editor.", "provenance": "inferred", "confidence": "high", "evidence": "The screenshot prioritizes tools over editorial messaging." }
+    ]
+  },
+  "layout": {
+    "base_spacing": { "value": 4, "unit": "px", "provenance": "inferred", "confidence": "medium", "evidence": "Repeated compact increments across controls." },
+    "spacing_scale": [4, 8, 12, 16, 20, 24, 32],
+    "container": {
+      "header_height": 64,
+      "inspector_width": 320,
+      "provenance": "proposed",
+      "confidence": "medium",
+      "evidence": "Simplified from the reference to preserve the current product scope."
+    },
+    "grid": {
+      "desktop": "64px header + flexible canvas + 320px right inspector",
+      "mobile": "compact header + canvas + stacked inspector",
+      "provenance": "proposed",
+      "confidence": "high",
+      "evidence": "Supports existing controls without adding mockup preset browsing or a timeline."
+    },
+    "density": "compact desktop utility UI with generous canvas space"
+  },
+  "shape": {
+    "radii": [
+      { "role": "canvas", "value": 18, "provenance": "observed", "confidence": "medium", "evidence": "Central work area uses a large soft corner." },
+      { "role": "panel", "value": 0, "provenance": "observed", "confidence": "high", "evidence": "Side panels read as edge-to-edge structural regions." },
+      { "role": "control", "value": 12, "provenance": "inferred", "confidence": "medium", "evidence": "Inputs and rows use modest rounded rectangles." },
+      { "role": "pill", "value": 999, "provenance": "observed", "confidence": "high", "evidence": "Navigation and primary actions are capsules." }
+    ],
+    "borders": [
+      { "value": "1px solid #e5e5e5", "provenance": "observed", "confidence": "high", "evidence": "Persistent thin dividers define structure." }
+    ],
+    "shadows": [
+      { "value": "0 8px 24px rgba(0,0,0,0.08)", "provenance": "observed", "confidence": "medium", "evidence": "Used selectively on floating or selected capsule controls." }
+    ],
+    "surface_notes": [
+      { "value": "Rely on borders and surface changes before shadows.", "provenance": "observed", "confidence": "high", "evidence": "Most hierarchy is structural rather than elevated." }
+    ]
+  },
+  "imagery": {
+    "media_types": [
+      { "value": "large 3D product render on a neutral studio canvas", "provenance": "observed", "confidence": "high", "evidence": "The phone render dominates the workspace." }
+    ],
+    "art_direction": [
+      { "value": "neutral background, soft controlled light, generous crop, minimal decoration", "provenance": "observed", "confidence": "high", "evidence": "The central scene is isolated from interface chrome." }
+    ],
+    "iconography": [
+      { "value": "simple black outline icons, approximately 18-20px, 1.5px stroke", "provenance": "inferred", "confidence": "medium", "evidence": "Toolbar icons are compact and visually light." }
+    ],
+    "motion": [
+      { "value": "subtle, direct-manipulation motion with short 160-220ms UI transitions", "provenance": "proposed", "confidence": "medium", "evidence": "Static screenshot supplies no direct timing evidence; proposal fits the precision-led system." }
+    ]
+  },
+  "rules": {
+    "do": [
+      "Keep the 3D preview as the visual center of gravity.",
+      "Use white structural panels over a pale gray workspace.",
+      "Use one black capsule for the primary export action.",
+      "Keep labels short, compact, and aligned to a consistent grid.",
+      "Preserve the existing upload, view, background, motion, fit, and export functions."
+    ],
+    "do_not": [
+      "Do not copy the reference logo, product thumbnails, or proprietary artwork.",
+      "Do not add preset libraries, timelines, keyframes, accounts, or pro-mode controls in this pass.",
+      "Do not use heavy shadows, saturated panels, or large editorial headings.",
+      "Do not let the inspector overpower the canvas."
+    ]
+  },
+  "open_questions": [],
+  "decisions": [
+    {
+      "value": "Use the reference as a design-system source, not as a feature specification.",
+      "reason": "The user requested its visual system while the project brief explicitly avoids becoming a large editor.",
+      "source": "user_directive"
+    },
+    {
+      "value": "Use a strictly black, white, and gray interface with no green accent.",
+      "reason": "The user explicitly declined retaining the existing green accent.",
+      "source": "user_directive"
+    }
+  ]
+}

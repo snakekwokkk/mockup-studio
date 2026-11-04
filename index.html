@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="上传设计截图或录屏，快速制作可导出的 3D 手机作品展示。">
+  <title>Mockup Studio</title>
+  <script type="importmap">{"imports":{"three":"/node_modules/three/build/three.module.js","three/addons/":"/node_modules/three/examples/jsm/"}}</script>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="motion-mode">
+  <header class="topbar">
+    <div class="brand" aria-label="Mockup Studio">
+      <span class="brand-mark" aria-hidden="true">M</span>
+      <span class="brand-copy"><strong>Mockup Studio</strong><small>3D phone preview</small></span>
+    </div>
+    <nav class="mode-switch" aria-label="工作模式">
+      <button id="static-mode" type="button">Static</button>
+      <button id="motion-mode" class="is-active" type="button" aria-current="page">Motion</button>
+    </nav>
+    <div class="top-actions">
+      <span class="local-badge"><i aria-hidden="true"></i> Local preview</span>
+      <button class="export" id="export" type="button">
+        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2v10m0 0 4-4m-4 4L6 8M3 13v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3"/></svg>
+        Export PNG
+      </button>
+    </div>
+  </header>
+  <main class="editor">
+    <section class="canvas-shell" aria-label="三维手机工作区">
+      <div class="canvas-toolbar">
+        <div class="tool-group" aria-label="视角">
+          <button id="front" type="button">正面</button>
+          <button id="angle" class="is-selected" type="button">立体视角</button>
+          <button id="isometric" type="button">产品视角</button>
+        </div>
+        <span class="canvas-title">Phone / Live preview</span>
+        <button class="motion-toggle" id="motion" type="button" aria-pressed="true">自动运镜 · 开</button>
+      </div>
+      <div class="stage-area">
+        <div class="stage">
+          <div id="viewport"></div>
+          <div class="stage-caption"><span>拖动旋转</span><span>滚轮缩放</span></div>
+        </div>
+      </div>
+    </section>
+    <aside class="inspector">
+      <div class="inspector-heading">
+        <div><p>Inspector</p><span>Scene 01</span></div>
+        <span class="status-dot" aria-label="预览已就绪"></span>
+      </div>
+      <section class="panel-section">
+        <div class="section-title"><h2>画布比例</h2><span>01</span></div>
+        <div class="ratio-options" aria-label="画布比例">
+          <button type="button" data-aspect="1:1" aria-pressed="false"><i style="--ratio: 1 / 1"></i><span>1:1</span></button>
+          <button type="button" data-aspect="16:9" aria-pressed="false"><i style="--ratio: 16 / 9"></i><span>16:9</span></button>
+          <button class="is-selected" type="button" data-aspect="4:3" aria-pressed="true"><i style="--ratio: 4 / 3"></i><span>4:3</span></button>
+          <button type="button" data-aspect="3:4" aria-pressed="false"><i style="--ratio: 3 / 4"></i><span>3:4</span></button>
+          <button type="button" data-aspect="9:16" aria-pressed="false"><i style="--ratio: 9 / 16"></i><span>9:16</span></button>
+        </div>
+      </section>
+      <section class="panel-section">
+        <div class="section-title"><h2>屏幕内容</h2><span>02</span></div>
+        <label class="upload" id="dropzone">
+          <span class="upload-icon" aria-hidden="true">＋</span>
+          <span>选择截图或录屏</span>
+          <small>PNG、JPG、MP4 或 WebM<br>文件仅在本机预览</small>
+          <input id="media" type="file" accept="image/*,video/mp4,video/webm">
+        </label>
+        <p id="status" role="status">当前为演示界面，可替换成你的设计。</p>
+      </section>
+      <section class="panel-section">
+        <div class="section-title"><h2>画面与机身</h2><span>03</span></div>
+        <label class="setting" for="fit"><span>画面适配</span><select id="fit"><option value="cover">填满屏幕</option><option value="contain">完整显示</option></select></label>
+        <label class="setting" for="background"><span>背景颜色</span><span class="color-control"><code>#E7E7E7</code><input id="background" type="color" value="#e7e7e7" aria-label="背景颜色"></span></label>
+        <div class="finish-setting"><span>机身颜色</span><div class="finish-options" aria-label="机身颜色">
+          <button class="is-selected" type="button" data-finish="silver" aria-label="银色" title="银色" aria-pressed="true"></button>
+          <button type="button" data-finish="black" aria-label="黑色" title="黑色" aria-pressed="false"></button>
+          <button type="button" data-finish="blue" aria-label="雾蓝色" title="雾蓝色" aria-pressed="false"></button>
+          <button type="button" data-finish="titanium" aria-label="钛灰色" title="钛灰色" aria-pressed="false"></button>
+        </div></div>
+      </section>
+      <section class="panel-section panel-note">
+        <div><strong>精细模型</strong><span id="model-finish-label">iPhone 18 Pro · Silver</span></div>
+        <p>已接入独立 GLB 机身，上传的截图和录屏会继续贴合在正面屏幕区域。</p>
+      </section>
+    </aside>
+  </main>
+  <section class="timeline" aria-label="运镜时间轴">
+    <div class="timeline-controls">
+      <button id="play-motion" type="button">▶ 回放</button>
+      <button id="record-motion" type="button"><i></i> 录制动作</button>
+      <button id="clear-motion" type="button">清空</button>
+      <label>时长 <input id="motion-duration" type="number" min="2" max="20" step="0.5" value="6"> 秒</label>
+      <span id="timeline-status">拖动手机并记录你的运镜</span>
+      <button class="video-export" id="export-video" type="button">导出 WebM</button>
+    </div>
+    <div class="timeline-ruler" id="timeline-ruler">
+      <div class="timeline-labels"><span>0s</span><span>25%</span><span>50%</span><span>75%</span><span>结束</span></div>
+      <div class="timeline-track"><div class="timeline-progress" id="timeline-progress"></div><div class="timeline-markers" id="timeline-markers"></div><i class="timeline-playhead" id="timeline-playhead"></i></div>
+    </div>
+  </section>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

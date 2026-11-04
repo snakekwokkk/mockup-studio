@@ -1,0 +1,14 @@
+{
+  "name": "mockup-studio",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node dev-server.mjs",
+    "start": "node dev-server.mjs",
+    "check": "node --check app.js && node --check dev-server.mjs"
+  },
+  "dependencies": {
+    "three": "^0.180.0"
+  }
+}
