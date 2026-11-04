@@ -8,18 +8,17 @@
   <script type="importmap">{"imports":{"three":"/node_modules/three/build/three.module.js","three/addons/":"/node_modules/three/examples/jsm/"}}</script>
   <link rel="stylesheet" href="/styles.css">
 </head>
-<body class="motion-mode">
+<body>
   <header class="topbar">
     <div class="brand" aria-label="Mockup Studio">
       <span class="brand-mark" aria-hidden="true">M</span>
       <span class="brand-copy"><strong>Mockup Studio</strong><small>3D phone preview</small></span>
     </div>
     <nav class="mode-switch" aria-label="工作模式">
-      <button id="static-mode" type="button">Static</button>
-      <button id="motion-mode" class="is-active" type="button" aria-current="page">Motion</button>
+      <button id="static-mode" class="is-active" type="button" aria-current="page">Static</button>
+      <button id="motion-mode" type="button">Motion</button>
     </nav>
     <div class="top-actions">
-      <span class="local-badge"><i aria-hidden="true"></i> Local preview</span>
       <button class="export" id="export" type="button">
         <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2v10m0 0 4-4m-4 4L6 8M3 13v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3"/></svg>
         Export PNG
@@ -32,25 +31,21 @@
         <div class="tool-group" aria-label="视角">
           <button id="front" type="button">正面</button>
           <button id="angle" class="is-selected" type="button">立体视角</button>
-          <button id="isometric" type="button">产品视角</button>
+          <button id="product" type="button">产品视角</button>
+          <button id="isometric" type="button">等距视角</button>
         </div>
-        <span class="canvas-title">Phone / Live preview</span>
         <button class="motion-toggle" id="motion" type="button" aria-pressed="true">自动运镜 · 开</button>
       </div>
       <div class="stage-area">
         <div class="stage">
           <div id="viewport"></div>
-          <div class="stage-caption"><span>拖动旋转</span><span>滚轮缩放</span></div>
+          <div class="stage-caption"><span>左键旋转</span><span>右键移动</span><span>滚轮缩放</span></div>
         </div>
       </div>
     </section>
     <aside class="inspector">
-      <div class="inspector-heading">
-        <div><p>Inspector</p><span>Scene 01</span></div>
-        <span class="status-dot" aria-label="预览已就绪"></span>
-      </div>
       <section class="panel-section">
-        <div class="section-title"><h2>画布比例</h2><span>01</span></div>
+        <div class="section-title"><h2>画布比例</h2></div>
         <div class="ratio-options" aria-label="画布比例">
           <button type="button" data-aspect="1:1" aria-pressed="false"><i style="--ratio: 1 / 1"></i><span>1:1</span></button>
           <button type="button" data-aspect="16:9" aria-pressed="false"><i style="--ratio: 16 / 9"></i><span>16:9</span></button>
@@ -60,29 +55,40 @@
         </div>
       </section>
       <section class="panel-section">
-        <div class="section-title"><h2>屏幕内容</h2><span>02</span></div>
+        <div class="section-title phone-section-title"><h2>手机页面</h2><button id="duplicate-phone" type="button">＋ 复制手机</button></div>
+        <div class="phone-list" id="phone-list" aria-label="手机页面列表"></div>
+        <small class="phone-limit" id="phone-limit">最多 10 台 · 画布中统一移动与旋转</small>
         <label class="upload" id="dropzone">
           <span class="upload-icon" aria-hidden="true">＋</span>
-          <span>选择截图或录屏</span>
+          <span id="upload-target-label">为手机 1 选择截图或录屏</span>
           <small>PNG、JPG、MP4 或 WebM<br>文件仅在本机预览</small>
           <input id="media" type="file" accept="image/*,video/mp4,video/webm">
         </label>
-        <p id="status" role="status">当前为演示界面，可替换成你的设计。</p>
+        <p id="status" role="status"></p>
       </section>
       <section class="panel-section">
-        <div class="section-title"><h2>画面与机身</h2><span>03</span></div>
+        <div class="section-title"><h2>画面与机身</h2></div>
         <label class="setting" for="fit"><span>画面适配</span><select id="fit"><option value="cover">填满屏幕</option><option value="contain">完整显示</option></select></label>
-        <label class="setting" for="background"><span>背景颜色</span><span class="color-control"><code>#E7E7E7</code><input id="background" type="color" value="#e7e7e7" aria-label="背景颜色"></span></label>
+        <label class="setting" for="background-mode"><span>背景类型</span><select id="background-mode"><option value="solid">纯色</option><option value="gradient">渐变</option><option value="image">图片</option><option value="transparent">透明</option></select></label>
+        <label class="setting background-control" id="background-solid" for="background"><span>背景颜色</span><span class="color-control"><code>#E7E7E7</code><input id="background" type="color" value="#e7e7e7" aria-label="背景颜色"></span></label>
+        <div class="background-control" id="background-gradient" hidden>
+          <div class="gradient-colors"><span>渐变颜色</span><span><input id="gradient-start" type="color" value="#f3f3f3" aria-label="渐变起始颜色"><input id="gradient-end" type="color" value="#b8c4d6" aria-label="渐变结束颜色"></span></div>
+          <label class="range-setting" for="gradient-angle"><span>渐变方向</span><span class="range-control"><input id="gradient-angle" type="range" min="0" max="360" step="1" value="135"><output id="gradient-angle-value" for="gradient-angle">135°</output></span></label>
+        </div>
+        <div class="background-control background-image-control" id="background-image" hidden><span>背景图片</span><label class="background-upload">选择图片<input id="background-file" type="file" accept="image/jpeg,image/png,image/webp"></label></div>
+        <div class="environment-setting"><span>环境光</span><div class="environment-actions">
+          <label class="environment-upload">选择图片<input id="environment-file" type="file" accept=".hdr,.exr,image/jpeg,image/png,image/webp"></label>
+          <button id="reset-environment" type="button">默认</button>
+        </div></div>
+        <small class="environment-help">支持 2:1 全景 JPG / PNG、HDR 或 EXR，仅影响灯光与反射。</small>
+        <label class="range-setting" for="fill-light"><span>补光强度</span><span class="range-control"><input id="fill-light" type="range" min="0" max="200" step="5" value="100"><output id="fill-light-value" for="fill-light">100%</output></span></label>
+        <label class="range-setting" for="environment-rotation"><span>HDR 旋转</span><span class="range-control"><input id="environment-rotation" type="range" min="-180" max="180" step="1" value="0" disabled><output id="environment-rotation-value" for="environment-rotation">0°</output></span></label>
         <div class="finish-setting"><span>机身颜色</span><div class="finish-options" aria-label="机身颜色">
           <button class="is-selected" type="button" data-finish="silver" aria-label="银色" title="银色" aria-pressed="true"></button>
           <button type="button" data-finish="black" aria-label="黑色" title="黑色" aria-pressed="false"></button>
           <button type="button" data-finish="blue" aria-label="雾蓝色" title="雾蓝色" aria-pressed="false"></button>
-          <button type="button" data-finish="titanium" aria-label="钛灰色" title="钛灰色" aria-pressed="false"></button>
+          <button type="button" data-finish="burgundy" aria-label="酒红色" title="酒红色" aria-pressed="false"></button>
         </div></div>
-      </section>
-      <section class="panel-section panel-note">
-        <div><strong>精细模型</strong><span id="model-finish-label">iPhone 18 Pro · Silver</span></div>
-        <p>已接入独立 GLB 机身，上传的截图和录屏会继续贴合在正面屏幕区域。</p>
       </section>
     </aside>
   </main>
